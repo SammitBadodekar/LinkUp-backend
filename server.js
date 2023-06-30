@@ -6,7 +6,7 @@ const cors = require("cors");
 const http = require("http");
 
 const server = http.createServer(app);
-server.use(
+app.use(
   cors({
     origin: "http://localhost:3000",
     methods: "GET,PUT,POST,DELETE",
