@@ -6,21 +6,15 @@ const cors = require("cors");
 const http = require("http");
 
 const server = http.createServer(app);
-app.use(
-  cors({
+app.use(cors());
+
+const io = new Server(server, {
+  cors: {
     origin: "http://localhost:3000",
     methods: "GET,PUT,POST,DELETE",
     credentials: true,
-  })
-);
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
-  res.setHeader("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
-  res.setHeader("Access-Control-Allow-Credentials", "true");
-  next();
+  },
 });
-
-const io = new Server(server);
 
 io.on("connection", (socket) => {
   console.log(socket?.id);
