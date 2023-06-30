@@ -1,0 +1,30 @@
+const express = require("express");
+const app = express();
+const { Server } = require("socket.io");
+const port = process.env.PORT || 3001;
+const cors = require("cors");
+const http = require("http");
+
+const server = http.createServer(app);
+app.use(cors());
+
+const io = new Server(server, {
+  cors: {
+    origin: "https://linkup-chat.vercel.app",
+    methods: "GET,PUT,POST,DELETE",
+    credentials: true,
+  },
+});
+
+io.on("connection", (socket) => {
+  console.log(socket?.id);
+
+  socket.on("send_message", (data) => {
+    console.log(data);
+    socket.broadcast.emit("broadcast", data);
+  });
+});
+
+server.listen(port, () => {
+  console.log(`server is running on port ${port}`);
+});
