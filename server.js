@@ -8,7 +8,7 @@ const http = require("http");
 const server = http.createServer(app);
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: "https://linkup-chat.vercel.app",
     methods: "GET,PUT,POST,DELETE",
     credentials: true,
   })
@@ -16,7 +16,7 @@ app.use(
 
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:3000",
+    origin: "https://linkup-chat.vercel.app",
     methods: "GET,PUT,POST,DELETE",
     credentials: true,
   },
