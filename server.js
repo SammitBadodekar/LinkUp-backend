@@ -10,9 +10,8 @@ app.use(cors());
 
 const io = new Server(server, {
   cors: {
-    origin: "https://linkup-chat.vercel.app",
+    origin: "http://localhost:3000",
     methods: "GET,PUT,POST,DELETE",
-    credentials: true,
   },
 });
 
