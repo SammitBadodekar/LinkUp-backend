@@ -5,10 +5,15 @@ const port = process.env.PORT || 3001;
 const cors = require("cors");
 const http = require("http");
 
+const allowedOrigins = [
+  "http://localhost:3000",
+  "https://linkup-chat.vercel.app",
+];
+
 const server = http.createServer(app);
 app.use(
   cors({
-    origin: "https://linkup-chat.vercel.app",
+    origin: allowedOrigins,
     methods: "GET,PUT,POST,DELETE",
     credentials: true,
   })
@@ -16,7 +21,7 @@ app.use(
 
 const io = new Server(server, {
   cors: {
-    origin: "https://linkup-chat.vercel.app",
+    origin: allowedOrigins,
     methods: "GET,PUT,POST,DELETE",
     credentials: true,
   },
