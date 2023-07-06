@@ -28,11 +28,16 @@ const io = new Server(server, {
 });
 
 io.on("connection", (socket) => {
-  console.log(socket?.id);
-
   socket.on("send_message", (data) => {
-    console.log(data);
     socket.broadcast.emit("broadcast", data);
+  });
+  socket.on("join_self", (data) => {
+    socket.join(`${data.email}`);
+    console.log("joined", data.email);
+  });
+  socket.on("send_request", (data) => {
+    io.to(`${data.receiver?.email}`).emit("receive_request", data);
+    console.log("sent request", data.receiver?.email);
   });
 });
 
