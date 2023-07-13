@@ -2,8 +2,11 @@ const express = require("express");
 const app = express();
 const { Server } = require("socket.io");
 const port = process.env.PORT || 3001;
+require("dotenv").config();
 const cors = require("cors");
 const http = require("http");
+const mongoose = require("mongoose");
+const UserModel = require("./models/UserModel");
 
 const allowedOrigins = [
   "http://localhost:3000",
@@ -43,4 +46,16 @@ io.on("connection", (socket) => {
 
 server.listen(port, () => {
   console.log(`server is running on port ${port}`);
+});
+
+mongoose.connect(process.env.MONGO_URI);
+
+app.get("/getAllUsers", (req, res) => {
+  UserModel.find()
+    .then((result) => {
+      res.send(result);
+    })
+    .catch((error) => {
+      res.send(error);
+    });
 });
