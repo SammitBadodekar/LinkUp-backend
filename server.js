@@ -32,7 +32,12 @@ const io = new Server(server, {
 
 io.on("connection", (socket) => {
   socket.on("send_message", (data) => {
-    socket.broadcast.emit("broadcast", data);
+    console.log(data);
+    if (data?.to === "Chat Lounge") {
+      socket.broadcast.emit("broadcast", data);
+    } else {
+      io.to(`${data.to}`).emit("receive_message", data);
+    }
   });
   socket.on("join_self", (data) => {
     socket.join(`${data.email}`);
@@ -40,7 +45,6 @@ io.on("connection", (socket) => {
   });
   socket.on("send_request", (data) => {
     io.to(`${data.receiver?.email}`).emit("receive_request", data);
-    console.log("sent request", data.receiver?.email);
   });
 });
 
