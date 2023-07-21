@@ -55,9 +55,9 @@ server.listen(port, () => {
 mongoose.connect(process.env.MONGO_URI);
 
 app.get("/getAllUsers", (req, res) => {
-  UserModel.find()
+  UserModel.find({}, { name: 1, email: 1, image: 1 })
     .then((result) => {
-      res.send(result);
+      res.json(result);
     })
     .catch((error) => {
       res.send(error);
