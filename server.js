@@ -7,10 +7,11 @@ const cors = require("cors");
 const http = require("http");
 const mongoose = require("mongoose");
 const UserModel = require("./models/UserModel");
+const faker = require("faker");
 
 const allowedOrigins = [
   "http://localhost:3000",
-  "https://linkup-chat.vercel.app",
+  "https://linkup-messenger.vercel.app",
 ];
 
 const server = http.createServer(app);
@@ -32,7 +33,6 @@ const io = new Server(server, {
 
 io.on("connection", (socket) => {
   socket.on("send_message", (data) => {
-    console.log(data);
     if (data?.to === "Chat Lounge") {
       socket.broadcast.emit("broadcast", data);
     } else {
@@ -63,3 +63,38 @@ app.get("/getAllUsers", (req, res) => {
       res.send(error);
     });
 });
+
+/* const getDogImage = () => {
+  return new Promise((resolve, reject) => {
+    fetch(`http://loremflickr.com/640/480/dog`)
+      .then((response) => resolve(response.url))
+      .catch((error) => reject(error));
+  });
+};
+
+const generateDummyUsers = async () => {
+  const users = [];
+  for (let i = 0; i < 20; i++) {
+    const user = {
+      name: faker.name.firstName(),
+      email: faker.internet.email(),
+      image: await getDogImage(),
+      requests: [],
+      friends: [],
+    };
+    users.push(user);
+  }
+  return users;
+};
+
+const saveDummyUsers = async () => {
+  const users = await generateDummyUsers();
+  const dog = await getDogImage();
+  console.log(dog);
+
+  console.log(users);
+  await UserModel.insertMany(users);
+};
+
+saveDummyUsers();
+ */
