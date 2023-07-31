@@ -12,6 +12,7 @@ const faker = require("faker");
 const allowedOrigins = [
   "http://localhost:3000",
   "https://linkup-messenger.vercel.app",
+  "https://linkup-chat.vercel.app",
 ];
 
 const server = http.createServer(app);
